@@ -5,7 +5,7 @@ const FormSubmitButton = (onPress :any) => {
   
   return (
     
-    <Button title="Add Data" />
+    <Button title="Add Data" onPress={onPress}/>
 
   );
 };

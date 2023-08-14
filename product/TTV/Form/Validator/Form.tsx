@@ -7,9 +7,6 @@ import FormSubmitButton from './FormSubmitButton';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-
-
-
 const validationSchema = Yup.object({
   fullname: Yup.string()
     .trim()
@@ -23,31 +20,17 @@ const validationSchema = Yup.object({
   
 });
 
-
  const Form = () => {
-  
   const [data, setData] = useState<any>([]);
   const [searchText, setSearchText] = useState("");
   const userInfo = {
     fullname: '',
     email: '',
     password: '',
-   
   };
-  useEffect(() => {
-    fetch('https://64d748602a017531bc1319dc.mockapi.io/api/users')
-      .then(response => response.json())
-      .then(json => {
-        console.log(typeof json)
-        console.log( json[0])
-        setData(json);
-      })
-      .catch(error => console.error(error));
-  }, []);
   
   const handlePost = (values:any) => {
-   
-   /*fetch('https://64d748602a017531bc1319dc.mockapi.io/api/users', {
+  fetch('https://64d748602a017531bc1319dc.mockapi.io/api/users', {
     method: 'POST',
     body: JSON.stringify(
       {
@@ -65,39 +48,8 @@ const validationSchema = Yup.object({
     setData([...data, json]);
     
   })
-  .catch(error => console.error(error));*/
+  .catch(error => console.error(error));
   };
-
-
-  const handleDelete = (itemId:any) => {
-    fetch(`https://64d748602a017531bc1319dc.mockapi.io/api/users/${itemId}`, {
-      method: 'DELETE',
-    })
-      .then(response => response.json())
-      .then(json => {
-        setData(data.filter((item: any) => item.id !== itemId));
-      })
-      .catch(error => console.error(error));
-  };
-
-const handleEdit = (item:any) => {
-
-}
-
-const handleSearch = () => {
-  if (searchText === '') {
-    fetch(`https://64d748602a017531bc1319dc.mockapi.io/api/users`)
-      .then((response) => response.json())
-      .then((json) => {
-        setData(json);
-      })
-      .catch((error) => console.error(error));
-  } else {
-  const filteredData = data.filter((item: any) =>
-    item.fullname.toLowerCase().includes(searchText.toLowerCase())
-  );
-  setData(filteredData);}
-}
 
   return (
     <>
@@ -124,7 +76,7 @@ const handleSearch = () => {
                   placeholder='John Smith'
                 />
                 {touched.fullname && errors.fullname && (
-             <Text style={styles.errorstyle}>{errors.fullname}</Text>
+             <Text style={styles.errorstyle} testID="dateError">{errors.fullname}</Text>
            ) }
                 <FormInput
                   value={values.email}
@@ -135,7 +87,7 @@ const handleSearch = () => {
                   placeholder='example@email.com'
                 />
                  {touched.email && errors.email && (
-             <Text style={styles.errorstyle}>{errors.email}</Text>
+             <Text style={styles.errorstyle} testID="dateError">{errors.email}</Text>
            )}
                 <FormInput
                   value={values.password}
@@ -144,15 +96,14 @@ const handleSearch = () => {
                   autoCapitalize='none'
                   secureTextEntry
                   label='Password'
-                  placeholder='********'
+                  placeholder='hanh021296@'
                 />
                  {touched.password && errors.password &&  (
-             <Text style={styles.errorstyle}>{errors.password}</Text>
+             <Text style={styles.errorstyle} testID="dateError">{errors.password}</Text>
            ) }
               <View style = {styles.viewStyleForLine}></View>
               <Text style={styles.check}>By clicking Register, <Text style={styles.link}>you agree on our Privacy Policy.</Text> </Text>
-             <FormSubmitButton onPress={handlePost(values)}/>
-                
+              <Button testID="addDataButton" title="Add Data" onPress={()=>handlePost(values)}/>
           </View>
           
         
@@ -161,47 +112,14 @@ const handleSearch = () => {
   </Formik>
   </View>  
   
-  <TextInput
-        style={styles.searchInput}
-        onChangeText={text => setSearchText(text)}
-        value={searchText}
-        placeholder="Search..."
-        onSubmitEditing={handleSearch}
-      />
-  <ScrollView>
-                {data.map((item:any,index:any)=>{
-                    return(
-                        <View style={styles.item_course}  key={index}>
-                            <View>
-                                <Text style={styles.txt_name}>{index+1}. {item.id}</Text>
-                                <Text style={styles.txt_item}>{item.fullname}</Text>
-                                <Text style={styles.txt_item}>{item.email}</Text>
-                                <Text style={styles.txt_item}>{item.password}</Text>
-                                
-                            </View>
-                            <View>
-                                <TouchableOpacity
-                                    onPress={()=>handleDelete(item.id)}
-                                >
-                                    <Text style={styles.txt_del}>Delete</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress={()=>handleEdit(item)}
-                                >
-                                    <Text style={styles.txt_edit}>Edit</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    )
-                })}
-  </ScrollView>
+  
   </>
   )
  };
 
 const styles = StyleSheet.create({
   mainblock:{
-   minHeight: 470, 
+   minHeight: '100%', 
     padding:11,
     margin: 5,
     borderRadius: 15, 
@@ -233,54 +151,7 @@ const styles = StyleSheet.create({
   errorstyle: {
     color:'red'
   },
-  item_course : {
-    padding :11,
-    borderBottomWidth: 1,
-    borderBottomColor : "#e2e2e2",
-    flexDirection : "row",
-    justifyContent:"space-between",
-},
-txt_name : {
-    fontSize : 18,
-    marginTop : 5,
-    fontWeight : "bold"
-},
-txt_item : {
-    fontSize : 14,
-    marginTop : 5
-},
-txt_enabled : {
-    fontSize : 14,
-    marginTop : 5,
-    color:"green",
-    fontWeight : "bold"
-},
-txt_disabled : {
-    fontSize : 14,
-    marginTop : 5,
-    color:"yellow",
-    fontWeight : "bold"
-},
-txt_del:{
-    fontSize : 14,
-    marginTop : 5,
-    color:"red",
-    fontWeight : "bold"
-},
-txt_edit:{
-    fontSize : 14,
-    marginTop : 5,
-    color:"blue",
-    fontWeight : "bold"
-},
-searchInput: {
-  height: 40,
-  borderColor: 'gray',
-  borderWidth: 1,
-  marginBottom: 10,
-  paddingHorizontal: 10,
-  marginTop:15
-},
+ 
 
 });
 
