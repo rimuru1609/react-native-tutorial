@@ -7,7 +7,6 @@ type Color = {
     id: string;
     value: string;
 }
-
 export default function ColorPicker() {
     const [colors, setColors] = useState<Color[]>([]);
     const [color, setColor] = useState<string>('#8B795E');
@@ -101,6 +100,7 @@ export default function ColorPicker() {
         </View>
     );
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
