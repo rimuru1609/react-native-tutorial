@@ -1,14 +1,29 @@
 import { View, Text, TextInput, TouchableHighlight } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import styles from '../assets/styles'
 
-export default function Match({ setMatchCurrent }: any) {
+export type MatchProps = {
+    name: string;
+    numberOfTeams: number;
+}
+
+export default function Match({ navigation }: any) {
     const [name, setName] = useState<string>();
     const [numberOfTeams, setNumberOfTeams] = useState<number>();
+    const [matchCurrent, setMatchCurrent] = useState<MatchProps>();
+    const [isLoading, setIsLoading] = useState(false);
 
-    const createMatch = async () => {
-        return fetch("https://64d389ff67b2662bf3dc63e4.mockapi.io/keeper/matchs", {
+    useEffect(() => {
+        if (matchCurrent !== undefined) {
+            setIsLoading(false);
+            navigation.navigate('Register', { matchCurrent: matchCurrent });
+        }
+    }, [matchCurrent, navigation]);
+
+
+    const createMatch = () => {
+        fetch("https://64d389ff67b2662bf3dc63e4.mockapi.io/keeper/matchs", {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -22,20 +37,24 @@ export default function Match({ setMatchCurrent }: any) {
             .then((response) => response.json())
             .then((responseData) => {
                 console.log(JSON.stringify(responseData));
-                setMatchCurrent(responseData);
+                setMatchCurrent(responseData as MatchProps);
+            })
+            .catch((err) => {
+                console.error(err);
             })
     }
 
     return (
-        <View style={[styles.form, { marginTop: 240, marginBottom: 300 }]}>
+        <View style={[styles.container]}>
             <Text style={[styles.title, styles.textColor]}>Start a new match!</Text>
             <TextInput style={[styles.input, styles.textColor]} placeholder='Match name' onChangeText={(val) => setName(val)} />
             <TextInput style={[styles.input, styles.textColor]} placeholder='Number of participating teams' keyboardType='numeric' onChangeText={(val) => setNumberOfTeams(parseInt(val))} />
             <TouchableHighlight onPress={() => {
+                setIsLoading(true);
                 createMatch();
             }}>
-                <View style={styles.button}>
-                    <Text style={[styles.textColor]}>Start</Text>
+                <View style={[styles.button]}>
+                    <Text style={[styles.textColor]}>Start{isLoading && "ing ..."}</Text>
                 </View>
             </TouchableHighlight>
         </View>

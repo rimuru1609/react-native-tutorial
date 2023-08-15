@@ -1,34 +1,67 @@
-import { View, Text, Image, ScrollView, TouchableHighlight } from 'react-native'
-import React from 'react'
+import { View, Text, TouchableHighlight, ScrollView } from 'react-native'
+import React, { useState } from 'react'
 import styles from '../assets/styles'
-import { MatchProps, TeamProps } from './ScoreKeeper';
+import DisplayItem from './DisplayItem';
+import { TeamProps } from './RegisterTeam';
+import Dashboard from './Dashboard';
 
-type DisplayProps = {
-    matchCurrent: MatchProps;
-    teams: TeamProps[];
-}
+export default function Display({ navigation, route }: any) {
+    const teams = route.params.teams as TeamProps[];
+    const [listTeam, setListTeam] = useState<TeamProps[]>(teams);
 
-const Item = ({ name, avatar, scoreCurrent, id }: TeamProps) => {
+    const findTheWinners = () => {
+        let Winners = listTeam[0];
+        for (let index = 1; index < listTeam.length; index++) {
+            if (listTeam[index].scoreCurrent > Winners.scoreCurrent) {
+                Winners = listTeam[index];
+            }
+        }
+        return Winners;
+    }
+
+    const handleFinishMatch = () => {
+        const Winners = findTheWinners();
+        const url = "https://64d389ff67b2662bf3dc63e4.mockapi.io/keeper/teams/" + Winners.id;
+        const updateWinners = { ...Winners, numberOfWins: Winners.numberOfWins + 1 };
+
+        fetch(url, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updateWinners),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((responseData) => {
+                console.log(JSON.stringify(responseData));
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+
     return (
-        <View key={id} style={styles.box}>
-            <View style={[styles.box, styles.boxName]}>
-                <Text style={{ color: '#000', fontSize: 18 }}>{name}</Text>
+        <ScrollView>
+            <View style={styles.container}>
+                <Text style={[styles.title, styles.textColor]}>Match current: {teams[0].matchCurrent.name}</Text>
+                <View style={styles.boxTeams}>
+                    {listTeam.map((item, key) => <DisplayItem {...item} key={key} />)}
+                </View>
+                <Dashboard listTeam={listTeam} setListTeam={setListTeam} />
+                <TouchableHighlight style={[styles.button, { margin: 8, width: 100 }]} onPress={() => {
+                    handleFinishMatch();
+                    navigation.navigate('Keeper')
+                }}>
+                    <View>
+                        <Text>Finish</Text>
+                    </View>
+                </TouchableHighlight>
             </View>
-            <Image source={{ uri: avatar }} style={{ width: 50, height: 50 }}></Image>
-            <View style={[styles.box, styles.boxScore]}>
-                <Text style={{ color: '#000', fontSize: 32 }}>{scoreCurrent}</Text>
-            </View>
-        </View>
-    );
-}
-
-export default function Display({ matchCurrent, teams }: DisplayProps) {
-    return (
-        <View style={{ backgroundColor: '#8062D6', borderRadius: 16, padding: 16, marginTop: 80, marginBottom: 40 }}>
-            <Text style={[styles.title, styles.textColor]}>Match current: {matchCurrent?.name}</Text>
-            <View style={styles.boxTeams}>
-                {teams.map((item, key) => <Item {...item} key={key}></Item>)}
-            </View>
-        </View>
+        </ScrollView>
     )
 }
