@@ -3,12 +3,18 @@ import { Dimensions, StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#322653',
-        display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        height: '100%'
     },
     textColor: {
         color: '#FFD2D7'
+    },
+    marginTop8: {
+        marginTop: 8,
+    },
+    marginBottom8: {
+        marginBottom: 8,
     },
     title: {
         textAlign: 'center',
@@ -19,20 +25,33 @@ const styles = StyleSheet.create({
         fontSize: 28,
     },
     button: {
+        width: 200,
         alignItems: 'center',
         backgroundColor: '#9288F8',
-        padding: 8
+        padding: 8,
+        borderRadius: 8,
     },
-    form: {
-        backgroundColor: '#8062D6',
-        borderRadius: 16,
-        width: 340,
-        borderWidth: 1,
-        padding: 8
+    buttonContainer: {
+        alignItems: 'center',
+        marginVertical: 20
     },
     input: {
         borderBottomWidth: 1,
         marginBottom: 8
+    },
+    register: {
+        height: '100%',
+        backgroundColor: '#322653',
+    },
+    formRegister: {
+        width: 320,
+        marginLeft: 32,
+        marginRight: 32,
+        marginTop: 32,
+        padding: 8,
+        borderWidth: 1,
+        alignItems: 'center',
+        borderRadius: 8
     },
     box: {
         display: 'flex',
@@ -61,6 +80,19 @@ const styles = StyleSheet.create({
         height: 100,
         borderRadius: 20,
         backgroundColor: '#fff',
+    },
+    dashboard: {
+        backgroundColor: '#8062D6',
+        borderRadius: 16,
+        padding: 16,
+        width: '80%'
+    },
+    dashboardItem: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        margin: 16
     }
 });
 
