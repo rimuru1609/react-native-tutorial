@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Button, TouchableOpacity, Image, Alert } from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
+import { Slider } from 'react-native-elements';
 
 type Color = {
     id: string;
     value: string;
 }
-
 export default function ColorPicker() {
     const [colors, setColors] = useState<Color[]>([]);
     const [color, setColor] = useState<string>('#8B795E');
@@ -21,29 +21,6 @@ export default function ColorPicker() {
             .catch(error => console.error('Error fetching colors:', error));
     }, []);
 
-    const handleHueIncrease = () => {
-        setHue((prevHue) => Math.min(prevHue + 1, 360));
-    };
-
-    const handleHueDecrease = () => {
-        setHue((prevHue) => Math.max(prevHue - 1, 0));
-    };
-
-    const handleSaturationIncrease = () => {
-        setSaturation((prevSaturation) => Math.min(prevSaturation + 1, 100));
-    };
-
-    const handleSaturationDecrease = () => {
-        setSaturation((prevSaturation) => Math.max(prevSaturation - 1, 0));
-    };
-
-    const handleLightnessIncrease = () => {
-        setLightness((prevLightness) => Math.min(prevLightness + 1, 100));
-    };
-
-    const handleLightnessDecrease = () => {
-        setLightness((prevLightness) => Math.max(prevLightness - 1, 0));
-    };
 
     const handleColorSubmit = () => {
         setColor(`hsl(${hue}, ${saturation}%, ${lightness}%)`);
@@ -54,7 +31,7 @@ export default function ColorPicker() {
     };
 
     const handleCopyColor = () => {
-        Clipboard.setString(color); // Sử dụng thư viện clipboard để sao chép màu vào clipboard
+        Clipboard.setString(color);
 
         Alert.alert('Color copied to clipboard');
     };
@@ -68,6 +45,7 @@ export default function ColorPicker() {
                     source={{
                         uri: 'https://cdn.pixabay.com/photo/2017/01/10/14/48/umbrella-1969261_960_720.png',
                     }}
+                    testID="color-image" // Test ID for image
                 />
             </View>
             <Text>Choose color: </Text>
@@ -83,34 +61,31 @@ export default function ColorPicker() {
             </View>
             <View style={styles.form}>
                 <Text>Hue:</Text>
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button} onPress={handleHueDecrease}>
-                        <Text>-</Text>
-                    </TouchableOpacity>
-                    <Text>{hue}</Text>
-                    <TouchableOpacity style={styles.button} onPress={handleHueIncrease}>
-                        <Text>+</Text>
-                    </TouchableOpacity>
+                <View testID="hue-slider">
+                    <Slider
+                        value={hue}
+                        onValueChange={(value) => setHue(value)}
+                        minimumValue={0}
+                        maximumValue={360}
+                    />
                 </View>
                 <Text>Saturation:</Text>
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button} onPress={handleSaturationDecrease}>
-                        <Text>-</Text>
-                    </TouchableOpacity>
-                    <Text>{saturation}</Text>
-                    <TouchableOpacity style={styles.button} onPress={handleSaturationIncrease}>
-                        <Text>+</Text>
-                    </TouchableOpacity>
+                <View testID="saturation-slider">
+                    <Slider
+                        value={saturation}
+                        onValueChange={(value) => setSaturation(value)}
+                        minimumValue={0}
+                        maximumValue={100}
+                    />
                 </View>
                 <Text>Lightness:</Text>
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button} onPress={handleLightnessDecrease}>
-                        <Text>-</Text>
-                    </TouchableOpacity>
-                    <Text>{lightness}</Text>
-                    <TouchableOpacity style={styles.button} onPress={handleLightnessIncrease}>
-                        <Text>+</Text>
-                    </TouchableOpacity>
+                <View testID="lightness-slider">
+                    <Slider
+                        value={lightness}
+                        onValueChange={(value) => setLightness(value)}
+                        minimumValue={0}
+                        maximumValue={100}
+                    />
                 </View>
                 <View style={styles.colorPreview}>
                     <TouchableOpacity
@@ -160,10 +135,8 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     form: {
+        width: '80%',
         marginTop: 20,
-    },
-    slider: {
-        width: '100%',
     },
 
     buttonContainer: {
@@ -196,4 +169,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 20,
     },
+
 });
