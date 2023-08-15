@@ -17,7 +17,6 @@ const FormInput = (props:any) => {
       </>
     );
   };
-  
   const styles = StyleSheet.create({
     input: {
       borderWidth: 1,

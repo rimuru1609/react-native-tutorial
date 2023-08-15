@@ -42,6 +42,7 @@ const handleSearch = () => {
   const filteredData = data.filter((item: any) =>
     item.fullname.toLowerCase().includes(searchText.toLowerCase())
   );
+  
   setData(filteredData);}
 }
   

@@ -112,7 +112,6 @@ const validationSchema = Yup.object({
   </Formik>
   </View>  
   
-  
   </>
   )
  };

@@ -40,6 +40,7 @@ it('Kiểm tra xem nếu xuất hiện lỗi', async() => {
             expect(handleSubmit).toHaveBeenCalledWith({
               password, fullname,email
             });
+            
     // Verify that handleSubmit was called with the correct arguments and only once
   //expect(handleSubmit).toHaveBeenCalledWith({password, fullname,email});
   

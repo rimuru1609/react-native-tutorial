@@ -28,4 +28,5 @@ const TabBar=()=>{
     </NavigationContainer>
   );
 }
+
 export default TabBar;
