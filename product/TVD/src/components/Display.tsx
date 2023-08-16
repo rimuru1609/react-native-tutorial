@@ -4,9 +4,10 @@ import styles from '../assets/styles'
 import DisplayItem from './DisplayItem';
 import { TeamProps } from './RegisterTeam';
 import Dashboard from './Dashboard';
+import { DisplayScreenProps } from '../navigator/type';
 
-export default function Display({ navigation, route }: any) {
-    const teams = route.params.teams as TeamProps[];
+export default function Display({ navigation, route }: DisplayScreenProps) {
+    const teams = route.params.teams;
     const [listTeam, setListTeam] = useState<TeamProps[]>(teams);
 
     const findTheWinners = () => {
@@ -46,7 +47,7 @@ export default function Display({ navigation, route }: any) {
     }
 
     return (
-        <ScrollView>
+        <ScrollView style={styles.scrollView}>
             <View style={styles.container}>
                 <Text style={[styles.title, styles.textColor]}>Match current: {teams[0].matchCurrent.name}</Text>
                 <View style={styles.boxTeams}>
