@@ -5,8 +5,8 @@ import SearchBar from '../views/Search/SearchBar';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Tab = createBottomTabNavigator();
 
+const Tab = createBottomTabNavigator();
 const TabBar=()=>{
   return (
     

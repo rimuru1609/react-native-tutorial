@@ -9,10 +9,8 @@ export default StyleSheet.create({
         fontSize: 16,
         paddingLeft: 10,
         marginBottom: 10,
-    
       },
       form:{
         flexDirection:"row",
-  
       }
 });

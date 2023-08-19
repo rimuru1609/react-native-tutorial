@@ -9,7 +9,8 @@ export default StyleSheet.create({
          backgroundColor: '#ebebeb',
          alignItems: "center",
          justifyContent: "center",
-         
+      
+
          },
        title:{
            fontSize:29,
@@ -17,6 +18,7 @@ export default StyleSheet.create({
            alignItems: "center",
            justifyContent: "center",
            color:' rgb(119, 119, 252)'
+           
        },
        check:{
          margin:10

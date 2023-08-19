@@ -27,6 +27,7 @@ export default StyleSheet.create({
     aspectRatio: 1,
   },
 
+  
   mainHeader: {
     fontSize: 22,
     color: "#344055",

@@ -6,6 +6,7 @@ import SearchBar from '../views/Search/SearchBar';
 import Detail from '../views/Detail/Detail';
 import { MainStackParamList } from './type';
 
+
 const Stack = createNativeStackNavigator<MainStackParamList>();
 const MyStack=()=> {
   return (
@@ -16,4 +17,5 @@ const MyStack=()=> {
     </Stack.Navigator>
   );
 }
+
 export default MyStack;

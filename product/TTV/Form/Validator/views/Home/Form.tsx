@@ -28,7 +28,6 @@ const validationSchema = Yup.object({
     email: '',
     password: '',
   };
-  
   const handlePost = (values:any) => {
   fetch('https://64d748602a017531bc1319dc.mockapi.io/api/users', {
     method: 'POST',
