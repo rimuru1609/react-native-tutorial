@@ -46,7 +46,6 @@ const validationSchema = Yup.object({
   .then(response => response.json())
   .then(json => {
     setData([...data, json]);
-    
   })
   .catch(error => console.error(error));
   };

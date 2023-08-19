@@ -16,7 +16,7 @@ const FormInput = (props:any) => {
         <TextInput {...props} placeholder={placeholder} style={InputStyle.input} />
       </>
     );
-  };
+};
   
   
   export default FormInput;

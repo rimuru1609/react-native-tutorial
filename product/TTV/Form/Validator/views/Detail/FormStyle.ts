@@ -19,7 +19,6 @@ export default StyleSheet.create({
     elevation: 8,
     marginVertical: 30,
   },
-
   cardImage: {
     width: "100%",
     display: "flex",
