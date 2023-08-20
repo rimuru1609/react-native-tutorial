@@ -8,7 +8,6 @@ import FormStyle from './FormStyle';
 const Detail = ({ navigation,route }:DetailScreenProps) => {
   const indexs=route.params.index;
   const [data, setData] = useState<any>([]);
-  
   useEffect(() => {
     console.log(indexs);
     fetch(`https://64d748602a017531bc1319dc.mockapi.io/api/users/${indexs}`)

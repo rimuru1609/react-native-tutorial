@@ -26,7 +26,6 @@ export default StyleSheet.create({
     height: undefined,
     aspectRatio: 1,
   },
-
   
   mainHeader: {
     fontSize: 22,

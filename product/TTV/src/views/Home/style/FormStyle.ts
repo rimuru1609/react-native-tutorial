@@ -17,8 +17,7 @@ export default StyleSheet.create({
            fontWeight:"bold",
            alignItems: "center",
            justifyContent: "center",
-           color:' rgb(119, 119, 252)'
-           
+           color:' rgb(119, 119, 252)'  
        },
        check:{
          margin:10

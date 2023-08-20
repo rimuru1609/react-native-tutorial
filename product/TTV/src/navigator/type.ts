@@ -6,7 +6,6 @@ export type MainStackParamList = {
     Details: { index: number };
 };
 
-
 export type HomeScreenProps = NativeStackScreenProps<MainStackParamList, 'Home'>;
 export type SearchScreenProps = NativeStackScreenProps<MainStackParamList, 'Search'>;
 export type DetailScreenProps = NativeStackScreenProps<MainStackParamList, 'Details'>;
