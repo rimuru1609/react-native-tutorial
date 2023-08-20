@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import styles from '../assets/styles';
 import { MatchProps } from './Match';
 import RegisterForm from './RegisterForm';
+import { RegisterScreenProps } from '../navigator/type';
 
 export type TeamProps = {
     id: number;
@@ -14,16 +15,16 @@ export type TeamProps = {
     numberOfWins: number;
 }
 
-export default function RegisterTeam({ navigation, route }: any) {
+export default function RegisterTeam({ navigation, route }: RegisterScreenProps) {
     const [teams, setTeams] = useState<TeamProps[]>([]);
 
     const items = [];
-    for (let i = 0; i < route.params.matchCurrent?.numberOfTeams; i++) {
+    for (let i = 0; i < route.params.matchCurrent.numberOfTeams; i++) {
         items.push({ order: i, matchCurrent: route.params.matchCurrent, teams: teams, setTeams: setTeams });
     }
 
     return (
-        <ScrollView style={styles.register}>
+        <ScrollView style={styles.scrollView}>
             {items.map((item, key) => <RegisterForm {...item} key={key} />)}
             <View style={styles.buttonContainer}>
                 <TouchableHighlight onPress={() => {
